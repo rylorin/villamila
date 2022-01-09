@@ -1,0 +1,68 @@
+# VillaMilaWines website docker stack
+version: '3.7'
+
+services:
+  php-fpm:
+  	# bitnami/php-fpm:7.4 not working
+  	# bitnami/php-fpm:7.1 working
+    image: bitnami/php-fpm:7.1
+    volumes:
+#      - /root/VillaMilaWines/sandbox:/app:rw
+#      - /root/VillaMilaWines/sandbox/app/db:/app/app/db:rw
+#      - /root/VillaMilaWines/sandbox/app/logs:/app/app/logs:rw
+#      - /root/VillaMilaWines/sandbox/app/cache:/app/app/cache:rw
+#      - /root/VillaMilaWines/sandbox/web/uploads:/app/web/uploads:rw
+#      - /root/VillaMilaWines/sandbox/docker/php-fpm/conf:/opt/bitnami/php-fpm/conf:ro
+      - app:/app:rw
+#      - villamila_app:/app:rw
+    configs:
+      - source: villamila_php.ini
+        target: /opt/bitnami/php-fpm/conf/php.ini
+      - source: villamila_fpm.conf
+        target: /opt/bitnami/php-fpm/conf/php-fpm.conf
+    deploy:
+      placement:
+        constraints:
+          - node.platform.os == linux
+#          - node.role == manager
+          - node.role == worker
+      replicas: 1
+  web:
+    image: caddy:2.1.1-alpine
+    volumes:
+      - app:/app:ro
+    networks:
+      - default
+      - system_dmz_network
+    depends_on:
+      - php-fpm
+    configs:
+      - source: sonata_Caddyfile
+        target: /etc/caddy/Caddyfile
+    deploy:
+      placement:
+        constraints:
+          - node.platform.os == linux
+          - node.role == manager
+#         - node.role == worker
+      replicas: 1
+
+networks:
+  default:
+#  portainer_agent_network:
+#    external: true
+  system_dmz_network:
+    external: true
+
+configs:
+  villamila.conf:
+    external: true
+  villamila_php.ini:
+    external: true
+  villamila_fpm.conf:
+    external: true
+
+volumes:
+#  villamila_app:
+#    external: true
+  app:
