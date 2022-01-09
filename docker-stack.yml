@@ -3,8 +3,10 @@ version: '3.7'
 
 services:
   php-fpm:
-  	# bitnami/php-fpm:7.4 not working
   	# bitnami/php-fpm:7.1 working
+  	# bitnami/php-fpm:7.2 should work
+  	# bitnami/php-fpm:7.3 should not work
+  	# bitnami/php-fpm:7.4 not working
     image: bitnami/php-fpm:7.1
     volumes:
 #      - /root/VillaMilaWines/sandbox:/app:rw
