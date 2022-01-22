@@ -3,18 +3,8 @@ version: '3.7'
 
 services:
   php-fpm:
-  	# bitnami/php-fpm:7.1 working
-  	# bitnami/php-fpm:7.2 should work
-  	# bitnami/php-fpm:7.3 should not work
-  	# bitnami/php-fpm:7.4 not working
     image: bitnami/php-fpm:7.1
     volumes:
-#      - /root/VillaMilaWines/sandbox:/app:rw
-#      - /root/VillaMilaWines/sandbox/app/db:/app/app/db:rw
-#      - /root/VillaMilaWines/sandbox/app/logs:/app/app/logs:rw
-#      - /root/VillaMilaWines/sandbox/app/cache:/app/app/cache:rw
-#      - /root/VillaMilaWines/sandbox/web/uploads:/app/web/uploads:rw
-#      - /root/VillaMilaWines/sandbox/docker/php-fpm/conf:/opt/bitnami/php-fpm/conf:ro
       - app:/app:rw
 #      - villamila_app:/app:rw
     configs:
@@ -26,11 +16,12 @@ services:
       placement:
         constraints:
           - node.platform.os == linux
-#          - node.role == manager
-          - node.role == worker
+          - node.role == manager
+#          - node.role == worker
       replicas: 1
+
   web:
-    image: caddy:2.1.1-alpine
+    image: caddy:2.4.6-alpine
     volumes:
       - app:/app:ro
     networks:
@@ -51,8 +42,6 @@ services:
 
 networks:
   default:
-#  portainer_agent_network:
-#    external: true
   system_dmz_network:
     external: true
 
@@ -63,8 +52,8 @@ configs:
     external: true
   villamila_fpm.conf:
     external: true
+  sonata_Caddyfile:
+    external: true
 
 volumes:
-#  villamila_app:
-#    external: true
   app:
