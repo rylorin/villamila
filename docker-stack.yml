@@ -2,7 +2,7 @@
 version: '3.7'
 
 services:
-  php-fpm:
+  php-fpm-villamila:
     image: bitnami/php-fpm:7.1
     volumes:
       - app:/app:rw
@@ -30,7 +30,7 @@ services:
     depends_on:
       - php-fpm
     configs:
-      - source: sonata_Caddyfile
+      - source: villamila_Caddyfile
         target: /etc/caddy/Caddyfile
     deploy:
       placement:
@@ -52,7 +52,7 @@ configs:
     external: true
   villamila_fpm.conf:
     external: true
-  sonata_Caddyfile:
+  villamila_Caddyfile:
     external: true
 
 volumes:
