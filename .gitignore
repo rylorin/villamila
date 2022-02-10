@@ -1,4 +1,3 @@
 /volumes/app_from_vps
 *.db
-/volumes/app/app/logs
-/volumes/app/app/cache
+/volumes/app
