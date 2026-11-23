@@ -1,0 +1,7 @@
+remote: root@vmi3777398.contaboserver.net
+stack_name: villamila
+rsync_image: eeacms/rsync:latest
+backup_keep: 3
+excludes: []
+download_delete_extraneous: false
+upload_delete_extraneous: false

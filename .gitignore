@@ -1,3 +1,4 @@
+/backup/
+/volumes/app
 /volumes/app_from_vps
 *.db
-/volumes/app
